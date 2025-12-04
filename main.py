@@ -10,55 +10,55 @@ import matplotlib.pyplot as plt
 databasename = None
 
 def createBase():
-  db = filedialog.asksaveasfilename(
-    initialdir="C:/",
-    title="Selecciona la ruta de la base de datos",
-    defaultextension=".db",
-    filetypes=[("Base de datos", "*.db")]
-  )
-  if db:
-      databasename = db
-      conn = sql.connect(databasename)
-      conn.close()
-      tablesOfDatabase()
-      frameHome.pack(side=TOP)
+    db = filedialog.asksaveasfilename(
+        initialdir="C:/",
+        title="Selecciona la ruta de la base de datos",
+        defaultextension=".db",
+        filetypes=[("Base de datos", "*.db")]
+    )
+    if db:
+        databasename = db
+        conn = sql.connect(databasename)
+        conn.close()
+        tablesOfDatabase()
+        frameHome.pack(side=TOP)
 
 def openBase():
-  global databasename
-  db = filedialog.askopenfilename(initialdir="C:/", title="Selecciona la ruta de la base de datos", filetypes=[("Base de datos", (".db", ".sql", "*.sqlite"))])
-  try:
-    if db is None:
-      pass
-    else:
-      databasename = db
-      tablesOfDatabase()
-      frameHome.pack(side=TOP)
-  except Exception as e:
-    cmdText.delete(0.0, END)
-    cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
+    global databasename
+    db = filedialog.askopenfilename(initialdir="C:/", title="Selecciona la ruta de la base de datos", filetypes=[("Base de datos", (".db", ".sql", "*.sqlite"))])
+    try:
+        if db is None:
+            pass
+        else:
+            databasename = db
+            tablesOfDatabase()
+            frameHome.pack(side=TOP)
+    except Exception as e:
+        cmdText.delete(0.0, END)
+        cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
 
 def closeBase():
-  global databasename
-  try:
-    db = None
-    databasename = db
-    reload()
-    app.update()
-  except Exception as e:
-    cmdText.delete(0.0, END)
-    cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
+    global databasename
+    try:
+        db = None
+        databasename = db
+        reload()
+        app.update()
+    except Exception as e:
+        cmdText.delete(0.0, END)
+        cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
 
 def fExecuteSql():
-  try:
-    frameHome.pack_forget()
-    frameExecute.pack()
-    frameCreateTable.pack_forget()
-    frameTableSelect.pack_forget()
-    frame_tabla.pack_forget()
-    frameTablaVista.pack_forget()
-  except Exception as e:
-    cmdText.delete(0.0, END)
-    cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
+    try:
+        frameHome.pack_forget()
+        frameExecute.pack()
+        frameCreateTable.pack_forget()
+        frameTableSelect.pack_forget()
+        frame_tabla.pack_forget()
+        frameTablaVista.pack_forget()
+    except Exception as e:
+        cmdText.delete(0.0, END)
+        cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
 
 def executeSql():
     global databasename
@@ -80,13 +80,11 @@ def executeSql():
             columnas = [desc[0] for desc in cursor.description]
             filas = cursor.fetchall()
 
-            # Asegurarse de que frame_tabla esté visible
             frame_tabla.pack(fill="both", expand=True, padx=10, pady=10)
 
             tabla = ttk.Treeview(frame_tabla, columns=columnas, show="headings", style="Treeview")
             tabla.pack(fill="both", expand=True)
 
-            # Scrollbars
             scroll_y = ttk.Scrollbar(frame_tabla, orient="vertical", command=tabla.yview)
             scroll_y.pack(side="right", fill="y")
             scroll_x = ttk.Scrollbar(frame_tabla, orient="horizontal", command=tabla.xview)
@@ -103,19 +101,19 @@ def executeSql():
             cmdText.insert(0.0, f'{len(filas)} filas y {len(columnas)} columnas ejecutadas sin errores. \n{entrySql.get(0.0, END)}.')
         elif query.strip().lower().startswith("delete from"):
             if "where" in query.strip().lower():
-              conn.commit()
-              cmdText.delete(0.0, END)
-              cmdText.insert(0.0, f'La consulta fue ejecutada exitosamente. \n{entrySql.get(0.0, END)}')
+                conn.commit()
+                cmdText.delete(0.0, END)
+                cmdText.insert(0.0, f'La consulta fue ejecutada exitosamente. \n{entrySql.get(0.0, END)}')
             else:
-              okcancel = messagebox.askokcancel("SQL", "Estas ejecutando una consulta que borrara todos los datos de la tabla. \n¿Estás seguro de que quieres continuar?")
-              if okcancel:
-                  conn.commit()
-                  cursor = conn.cursor()
-                  cursor.execute(query)
-                  cmdText.delete(0.0, END)
-                  cmdText.insert(0.0, f'La consulta fue ejecutada exitosamente. \n{entrySql.get(0.0, END)}.')
-              else:
-                  cmdText.delete(0.0, END)
+                okcancel = messagebox.askokcancel("SQL", "Estas ejecutando una consulta que borrara todos los datos de la tabla. \n¿Estás seguro de que quieres continuar?")
+                if okcancel:
+                    conn.commit()
+                    cursor = conn.cursor()
+                    cursor.execute(query)
+                    cmdText.delete(0.0, END)
+                    cmdText.insert(0.0, f'La consulta fue ejecutada exitosamente. \n{entrySql.get(0.0, END)}.')
+                else:
+                    cmdText.delete(0.0, END)
         else:
             conn.commit()
             cmdText.delete(0.0, END)
@@ -127,16 +125,16 @@ def executeSql():
         cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
 
 def fHome():
-  try:
-    frameHome.pack(side=TOP)
-    frameExecute.pack_forget()
-    frameTableSelect.pack_forget()
-    frame_tabla.pack_forget()
-    frameTablaVista.pack_forget()
-    frameCreateTable.pack_forget()
-  except Exception as e:
-    cmdText.delete(0.0, END)
-    cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
+    try:
+        frameHome.pack(side=TOP)
+        frameExecute.pack_forget()
+        frameTableSelect.pack_forget()
+        frame_tabla.pack_forget()
+        frameTablaVista.pack_forget()
+        frameCreateTable.pack_forget()
+    except Exception as e:
+        cmdText.delete(0.0, END)
+        cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
 
 def showTable(t):
     frame_tabla.pack_forget()
@@ -215,22 +213,22 @@ def tablesOfDatabase():
         conn.close()
         Label(frameHome, text="Tablas \n", fg="#ffffff", font=('sans-serif', 16), bg="#011627").pack(pady=5)
         for tabla in tablas:
-          Button(frameHome, text=tabla[0], command=lambda tabla=tabla[0]: showTable(tabla), bg="#011627", fg="white", font=("Arial", 10, "bold"), relief="raised", bd=0, activebackground="#011627", activeforeground="#ffffff").pack(pady=5)
+            Button(frameHome, text=tabla[0], command=lambda tabla=tabla[0]: showTable(tabla), bg="#011627", fg="white", font=("Arial", 10, "bold"), relief="raised", bd=0, activebackground="#011627", activeforeground="#ffffff").pack(pady=5)
     except Exception as e:
         cmdText.delete(0.0, END)
         cmdText.insert(0.0, f'Ocurrio un error. \nERROR: {str(e)}.')
 
 def fCreateTable():
-  try:
-    frameCreateTable.pack()
-    frameExecute.pack_forget()
-    frameTableSelect.pack_forget()
-    frame_tabla.pack_forget()
-    frameTablaVista.pack_forget()
-    frameHome.pack_forget()
-  except Exception as e:
-    cmdText.delete(0.0, END)
-    cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
+    try:
+        frameCreateTable.pack()
+        frameExecute.pack_forget()
+        frameTableSelect.pack_forget()
+        frame_tabla.pack_forget()
+        frameTablaVista.pack_forget()
+        frameHome.pack_forget()
+    except Exception as e:
+        cmdText.delete(0.0, END)
+        cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
 
 
 def appAddCol():
@@ -254,35 +252,35 @@ def appAddCol():
 
     Button(top, text="Agregar", command=lambda: addCol(entryNameCol.get(), entryTypeCol.get(), autoIncrement.get()), bg="#011A2E", fg="#ffffff", activebackground="#002341").grid(row=6, column=0)
     try:
-      pass
+        pass
     except Exception as e:
-      cmdText.delete(0.0, END)
-      cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
+        cmdText.delete(0.0, END)
+        cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
 
 def addCol(nameCol, typeCol, autoIncrement):
-  try:
-    global databasename
-    tableName = entryNameTable.get()
-    if nameCol and typeCol:
-        conn = sql.connect(databasename)
-        cursor = conn.cursor()
+    try:
+        global databasename
+        tableName = entryNameTable.get()
+        if nameCol and typeCol:
+            conn = sql.connect(databasename)
+            cursor = conn.cursor()
 
-        if autoIncrement:
-            cursor.execute(f"CREATE TABLE IF NOT EXISTS {tableName} (ID INTEGER PRIMARY KEY AUTOINCREMENT, {nameCol} {typeCol})")
+            if autoIncrement:
+                cursor.execute(f"CREATE TABLE IF NOT EXISTS {tableName} (ID INTEGER PRIMARY KEY AUTOINCREMENT, {nameCol} {typeCol})")
+            else:
+                cursor.execute(f"CREATE TABLE IF NOT EXISTS {tableName} ({nameCol} {typeCol})")
+
+            conn.commit()
+            conn.close()
+            cmdText.delete(0.0, END)
+            cmdText.insert(0.0, f'Columna agregada correctamente.')
         else:
-            cursor.execute(f"CREATE TABLE IF NOT EXISTS {tableName} ({nameCol} {typeCol})")
-
-        conn.commit()
-        conn.close()
+            cmdText.delete(0.0, END)
+            cmdText.insert(0.0, f'Porfavor complete todos los campos.')
+            fHome()
+    except Exception as e:
         cmdText.delete(0.0, END)
-        cmdText.insert(0.0, f'Columna agregada correctamente.')
-    else:
-        cmdText.delete(0.0, END)
-        cmdText.insert(0.0, f'Porfavor complete todos los campos.')
-        fHome()
-  except Exception as e:
-    cmdText.delete(0.0, END)
-    cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
+        cmdText.insert(0.0, f'Ocurrio un error. \nError: {str(e)}.')
 
 def reload():
     try:
@@ -294,35 +292,35 @@ def reload():
         cmdText.insert(0.0, f'Ha ocurrido un error.\nError: {str(e)}.')
 
 def closeApp():
-  respuesta = messagebox.askyesno("Salir", "¿Estás seguro que deseas salir?")
-  if respuesta:
-    app.destroy()
+    respuesta = messagebox.askyesno("Salir", "¿Estás seguro que deseas salir?")
+    if respuesta:
+        app.destroy()
 
 def infoDatabase():
-  conn = sql.connect(databasename)
-  cursor = conn.cursor()
-  if databasename is None:
-    cmdText.delete(0.0, END)
-    cmdText.insert(0.0, f'ERROR: No hay una base de datos abierta.')
-    return
-  else:
-    try:
-      cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-      tablas = cursor.fetchall()
-      nametabla = ""
-      for tabla in tablas:
-        cursor.execute(f"PRAGMA table_info({tabla[0]})")
-        columnas = cursor.fetchall()
-        cursor.execute(f"SELECT COUNT(*) FROM {tabla[0]}")
-        cantidad = cursor.fetchone()[0]
-        nametabla += f'(Tabla "{tabla[0]}" → Columnas: {len(columnas)}, Filas: {cantidad}), '
-      cmdText.insert(0.0, f'''Datos de la Base de Datos
-------------------------------
-Cantidad de Tablas: {len(tablas)}
-Info de las Tablas: {nametabla}''')
-    except Exception as e:
-      cmdText.delete(0.0, END)
-      cmdText.insert(0.0, f'Ocurrio un error. \nERROR: {str(e)}.')
+    conn = sql.connect(databasename)
+    cursor = conn.cursor()
+    if databasename is None:
+        cmdText.delete(0.0, END)
+        cmdText.insert(0.0, f'ERROR: No hay una base de datos abierta.')
+        return
+    else:
+        try:
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+            tablas = cursor.fetchall()
+            nametabla = ""
+            for tabla in tablas:
+                cursor.execute(f"PRAGMA table_info({tabla[0]})")
+                columnas = cursor.fetchall()
+                cursor.execute(f"SELECT COUNT(*) FROM {tabla[0]}")
+                cantidad = cursor.fetchone()[0]
+                nametabla += f'(Tabla "{tabla[0]}" → Columnas: {len(columnas)}, Filas: {cantidad}), '
+            cmdText.insert(0.0, f'''Datos de la Base de Datos
+    ------------------------------
+    Cantidad de Tablas: {len(tablas)}
+    Info de las Tablas: {nametabla}''')
+        except Exception as e:
+            cmdText.delete(0.0, END)
+            cmdText.insert(0.0, f'Ocurrio un error. \nERROR: {str(e)}.')
 
 def cmdCommand(event=None):
     if event.keysym != "Return":
@@ -341,16 +339,16 @@ def cmdCommand(event=None):
         help_text = """\
 📘 Comandos disponibles:
 
-  help                     → Muestra esta ayuda
-  clear                    → Limpia la consola
-  info                     → Información de la base actual
-  show tables              → Lista todas las tablas
-  viewtable(nombre)        → Muestra una tabla específica
-  delete database          → Borra la base de datos abierta
-  reload                   → Recarga la interfaz
-  sql [consulta]           → Ejecuta SQL directamente
-  search [dato]            → Busca datos en la base
-  exit                     → Cierra la aplicación
+help                     → Muestra esta ayuda
+clear                    → Limpia la consola
+info                     → Información de la base actual
+show tables              → Lista todas las tablas
+viewtable(nombre)        → Muestra una tabla específica
+delete database          → Borra la base de datos abierta
+reload                   → Recarga la interfaz
+sql [consulta]           → Ejecuta SQL directamente
+search [dato]            → Busca datos en la base
+exit                     → Cierra la aplicación
 """
         cmdText.insert("1.0", help_text)
         return
@@ -496,18 +494,18 @@ def searchDate(d):
         cmdText.delete(0.0, END)
         cmdText.insert(0.0, search_result)
     else:
-      cmdText.delete(0.0, END)
-      cmdText.insert(0.0, f"No se ha encontrado el dato {d} en ninguna tabla.")
+        cmdText.delete(0.0, END)
+        cmdText.insert(0.0, f"No se ha encontrado el dato {d} en ninguna tabla.")
 
 def appSearch():
-  top = Toplevel(app)
-  top.geometry("500x200")
-  top.title("Buscar Datos")
-  top.configure(bg="#011627")
-  Label(top, text="Buscar Datos", bg="#011627", fg="#ffffff").grid(row=0, column=0)
-  dato = Entry(top, width=20, bg="#011A2E", fg="#ffffff", insertbackground="#ffffff")
-  dato.grid(row=1, column=0)
-  Button(top, text="Buscar", command=lambda: searchDate(dato.get()), bg="#011A2E", fg="#ffffff", activebackground="#002341").grid(row=2, column=0)
+    top = Toplevel(app)
+    top.geometry("500x200")
+    top.title("Buscar Datos")
+    top.configure(bg="#011627")
+    Label(top, text="Buscar Datos", bg="#011627", fg="#ffffff").grid(row=0, column=0)
+    dato = Entry(top, width=20, bg="#011A2E", fg="#ffffff", insertbackground="#ffffff")
+    dato.grid(row=1, column=0)
+    Button(top, text="Buscar", command=lambda: searchDate(dato.get()), bg="#011A2E", fg="#ffffff", activebackground="#002341").grid(row=2, column=0)
 
 def helpToUser():
     top = Toplevel(app)
@@ -686,7 +684,7 @@ frameExecute = Frame(app, bg="#011322")
 entrySql = Text(frameExecute, height=5, width=80, font=("Consolas", 12), bg="#011322", fg="#ffffff", insertbackground="#ffffff")
 entrySql.pack(pady=5)
 
-Button(frameExecute, text="Ejecutar", bg="#002341", fg="white", font=("Arial", 10, "bold"), relief="raised", bd=3, command=executeSql, activebackground="#001A31", activeforeground="white").pack(pady=5)
+Button(frameExecute, text="▶ Ejecutar", bg="#002341", fg="white", font=("Arial", 10, "bold"), relief="raised", bd=3, command=executeSql, activebackground="#001A31", activeforeground="white").pack(pady=5)
 
 frame_tabla = Frame(frameExecute, bg="#011322")
 frame_tabla.pack(fill="both", expand=True, padx=10, pady=10)
@@ -717,5 +715,28 @@ scroll_x = ttk.Scrollbar(cmd, orient="horizontal")
 scroll_x.pack(side="bottom", fill="x")
 scroll_y.config(command=cmdText.yview)
 scroll_x.config(command=cmdText.xview)
+
+context_menu = Menu(app, tearoff=0, bg="#111827", fg="#e5e7eb")
+
+context_menu.add_command(label="New Database", command=createBase)
+context_menu.add_command(label="Open Database", command=openBase)
+context_menu.add_command(label="Close Database", command=closeBase)
+context_menu.add_separator()
+context_menu.add_command(label="Home", command=fHome)
+context_menu.add_command(label="Create Table", command=fCreateTable)
+context_menu.add_command(label="Execute SQL", command=fExecuteSql)
+context_menu.add_command(label="Info DB", command=infoDatabase)
+context_menu.add_separator()
+context_menu.add_command(label="Search Data", command=appSearch)
+context_menu.add_command(label="Export to PNG", command=toplevelExport)
+context_menu.add_separator()
+context_menu.add_command(label="Help", command=helpToUser)
+context_menu.add_command(label="Exit", command=closeApp)
+
+def show_context_menu(event):
+    context_menu.tk_popup(event.x_root, event.y_root)
+
+app.bind("<Button-3>", show_context_menu)
+app.bind("<Button-2>", show_context_menu)
 
 app.mainloop()
