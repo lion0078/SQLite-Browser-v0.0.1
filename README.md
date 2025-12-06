@@ -1,37 +1,34 @@
+# 🗂 SQL-Browser
 
-# SQLite Browser v0.0.1
+![Demo Screenshot](https://i.imgur.com/1NAP2ZD.png)
 
-![SQLite Browser](https://i.imgur.com/1NAP2ZD.png)
-
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Version](https://img.shields.io/badge/version-PreAlfa-yellow)
-![Issues](https://img.shields.io/github/issues/bellcodev/SQL-Browser)
-![Stars](https://img.shields.io/github/stars/bellcodev/SQL-Browser?style=social)
+![License](https://img.shields.io/github/license/bellcodev/SQL-Browser?style=flat-square)
+![Stars](https://img.shields.io/github/stars/bellcodev/SQL-Browser?style=flat-square)
+![Issues](https://img.shields.io/github/issues/bellcodev/SQL-Browser?style=flat-s\quare)
+![Last Commit](https://img.shields.io/github/last-commit/bellcodev/SQL-Browser?style=flat-square)
 
 ---
-## Description
 
-*SQLite Browser v0.0.1* is a desktop application developed in *Python* that allows users to interact with *SQLite* databases visually and intuitively, without manually writing SQL code.
+## 🛠 Lenguajes y librerías usadas
 
-This tool is designed for students, beginner developers, and anyone who wants to explore, create, and modify SQLite databases quickly and easily.
+![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white&style=for-the-badge)
+![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey?logo=sqlite&logoColor=white&style=for-the-badge)
 
-*Main Features:*
-- Create new SQLite databases from the interface.
-- Easily create, delete, and modify tables.
-- Insert, update, and delete records visually.
-- Execute custom SQL queries.
-- User-friendly graphical interface with intuitive buttons and menus.
+---
 
-*Technologies Used:*
-- Python 3.x
-- Tkinter (GUI)
-- SQLite (database)
-- Markdown for documentation
-- Git / GitHub for version control
+## 📖 Descripción amplia
+*SQL-Browser* es una aplicación pensada para explorar y gestionar bases de datos SQLite de manera visual y sencilla.  
+Con una interfaz clara y moderna, permite:  
 
-*Project Status:*
-- Alpha version (v0.0.1)
-- Basic functionalities implemented
-- Future improvements: database export/import, advanced filters, improved UI.
+- Abrir y visualizar tablas existentes.  
+- Ejecutar consultas SQL personalizadas.  
+- Exportar resultados en formatos comunes (PNG).  
+- Navegar entre bases de datos sin necesidad de herramientas externas.  
 
+El objetivo es ofrecer una herramienta *minimalista, rápida y accesible*, ideal para estudiantes, desarrolladores y cualquier persona que trabaje con SQLite en proyectos pequeños o medianos.  
+
+---
+
+## 👤 Autor
+*Ronald (bellcodev)*  
+- GitHub: [@bellcodev](https://github.com/bellcodev)  
